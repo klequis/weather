@@ -1,0 +1,114 @@
+<!--
+  > weather 06.html is derived from weather03.html
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <script src="//code.jquery.com/jquery-2.1.1.min.js"></script> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	 <script src="moment.js"></script> 
+	<!--<link rel="stylesheet" type="text/css" href="style.css">-->
+    <meta charset="utf-8">
+    <title>Weather</title>
+</head>
+<body>
+<a name="#ajax-getjson-example"></a>
+<div id="example-section38">   
+    <div>Football weather</div>
+    <div id="div381"></div>
+    <button id="btn382" type="button">Team location</button>
+    <div id="output"></div>
+</div>
+</body>
+</html>
+<script> 
+
+	function getWeather(url, callback) {
+		$.ajax({
+		  dataType: "jsonp",
+		  url: url,
+		  jsonCallback: 'jsonp',
+		  //data: { lat: coords[0], lon: coords[1] },
+		  cache: false,
+		})		
+		.done(function(json) {
+			callback(json); 
+		})
+	  .fail(function(xhr, status, errorThrown) {
+	    alert("Sorry, there was a problem!");
+	    console.log("error: " + errorThrown);
+	    console.log("status: " + status);
+	    console.dir(xhr);
+	  })
+	  .always(function(xhr, status) {
+	  	//alert("the request is complete!");
+	  });
+	}
+
+	function writeMessage(message) {
+		document.write("Message: " + message + "<br>");
+	}
+	/*
+		city.name
+		list[0].dt
+		main.temp
+		main.temp_min
+		main.temp_max
+		main.pressure
+		weather.description
+	*/
+
+	
+	$(document).ready(function () {
+	  //var output = 1;
+	  //var parsedData = {};
+
+	  $("#btn382").click(function () {
+	  	url = 'http://api.openweathermap.org/data/2.5/forecast/city?id=5392593&units=imperial&APPID=cd605b9a7b8b517b82492ee7bf47a295';
+	  	getWeather(url, function(data) {
+	  		
+    	  var city, dateString, currentTemp, lowTemp, highTemp, pressure, currentWeather;
+				city = data.city.name;
+
+				//Date
+				dateString = data.list[0].dt;
+				writeMessage(dateString);
+				
+				var thetime = moment.unix(dateString);
+				//document.write(thetime) + document.write("<br>");				
+				//momentDate = moment.unix(dateString).format("MM/DD/YYYY hh:mm");
+				//writeMessage("dateString2 = " + momentDate);
+				//localTime = momentDate().local().format("mm/dd/yyyy hh:mm:ss");
+				//localTime = momentDate().format("mm/dd/yyyy hh:mm:ss");
+				//var localTime = moment.unix(dateString).format("MM/DD/YYYY hh:mm");
+				writeMessage(thetime);
+
+
+				var main = data.list[0].main;
+				currentTemp = main.temp;
+				lowTemp = main.temp_min;
+				highTemp = main.temp_max;
+				pressure = main.pressure;
+				currentWeather = data.list[0].weather[0].description;
+
+
+
+				msg = "Current Weather is " + currentWeather + "<br>";
+				msg += "Weather for " + city + "<br>";
+				msg += dateString + "<br>";
+				msg += "Current temperature is " + currentTemp + "<br>";
+				msg += "Today's high" + highTemp + "<br>";
+				msg += "Tonight's low" + lowTemp + "<br>";
+				msg += "Pressure is " + pressure + "<br>";
+				writeMessage(msg);
+
+
+	  	});
+
+
+		});
+	});
+	
+</script>
