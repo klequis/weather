@@ -1,0 +1,96 @@
+
+
+
+
+
+<!--
+  > weather 06.html is derived from weather03.html
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <script src="//code.jquery.com/jquery-2.1.1.min.js"></script> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	 <script src="moment.js"></script>
+	<!--<link rel="stylesheet" type="text/css" href="style.css">-->
+    <meta charset="utf-8">
+    <title>Weather</title>
+</head>
+<body>
+<a name="#ajax-getjson-example"></a>
+<div id="example-section38">
+    <div>Football weather</div>
+		<input type="text" name="inputCity">
+    <div id="div381"></div>
+    <button id="btn382" type="button">Team location</button>
+    <div id="output"></div>
+</div>
+</body>
+</html>
+<script>
+
+
+	function flattenArray(arr) {
+		var eleA;
+		var eleB;
+		var eleC;
+		var eleS;
+		var retArr;
+
+		for (i=0; i<arr.length; i++) {
+			var eleA = arr[i];
+			if (Array.isArray(eleA)) {
+				for (j=0; j<eleA.length; j++) {
+					eleB = eleA[j];
+					if (Array.isArray(eleB)) {
+						for (h=0; h<eleB.length; h++) {
+							eleC = eleB[h];
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+
+
+
+	$(document).ready(function () {
+	  //steamrollArray([[["a"]], [["b"]]]) should return ["a", "b"].
+		var arr1 = [[["a"]], [["b"]]];
+		flattenArray(arr1);
+		//steamrollArray([1, [2], [3, [[4]]]]) should return [1, 2, 3, 4].
+		var arr2 = [1, [2], [3, [[4]]]];
+		//flattenArray(arr2);
+		//steamrollArray([1, [], [3, [[4]]]]) should return [1, 3, 4].
+		var arr3 = [1, [], [3, [[4]]]];
+		//flattenArray(arr3);
+		//steamrollArray([1, {}, [3, [[4]]]]) should return [1, {}, 3, 4].
+		var arr4 = [1, {}, [3, [[4]]]];
+		//flattenArray(arr4);
+
+		/*
+	  $("#btn382").click(function () {
+
+
+			var steamrollArray = [1, [2], [3, [[4]]]]
+			//var tmpArray = steamrollArray([1, [2], [3, [[4]]]]);
+			//var e1="A";
+
+			var e1 = steamrollArray[0];
+			var e2 = steamrollArray[1][0];
+			var e3 = steamrollArray[2][0];
+			var e4 = steamrollArray[2][1][0];
+			var newArray = [e1, e2, e3, e4];
+			for (i = 0; i < newArray.length; i++) {
+    		document.write(newArray[i] + "<br>");
+			}
+
+		});
+		*/
+	});
+
+</script>

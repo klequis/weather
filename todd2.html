@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <script src="//code.jquery.com/jquery-2.1.1.min.js"></script> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	 <script src="moment.js"></script>
+	<!--<link rel="stylesheet" type="text/css" href="style.css">-->
+    <meta charset="utf-8">
+    <title>Weather</title>
+</head>
+<body>
+
+</body>
+</html>
+
+
+<script>
+
+  function printArray(arr) {
+      var retArr = [];
+      i = 0;
+      if ( typeof(arr) == "object") {
+          for (var i = 0; i < arr.length; i++) {
+              printArray(arr[i]);
+          }
+      }
+      else {
+        //document.write(arr + "<br>");
+        retArr[i] = arr;
+        i++;
+      }
+  }
+
+  function printIt(arr) {
+    //document.write("arr.length: " + arr.length + "<br>");
+    for (j=0; j<arr.length; j++) {
+      document.write("j=" + j);
+      document.write("val" + j +": " + arr[j] + "<br>");
+    }
+  }
+
+	$(document).ready(function () {
+    var ret = [];
+    document.write("hello<br>");
+
+    var arr1 = [[["a"]], [["b"]]];
+    ret = printArray(arr1);
+    printIt(ret);
+
+    /*
+    var arr2 = [1, [2], [3, [[4]]]];
+    printArray(arr2);
+    var arr3 = [1, [], [3, [[4]]]];
+    printArray(arr3);
+    var arr4 = [1, {}, [3, [[4]]]];
+    ret = printArray(arr4);
+    printIt(ret);
+    */
+	});
+
+</script>
