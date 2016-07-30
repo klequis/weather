@@ -72,10 +72,12 @@
 
 	  $("#btn382").click(function () {
 	  	//url = 'http://api.openweathermap.org/data/2.5/forecast/city?id=5392593&units=imperial&APPID=cd605b9a7b8b517b82492ee7bf47a295';
-			url = 'http://api.openweathermap.org/data/2.5/weather?id=5392593&APPID=cd605b9a7b8b517b82492ee7bf47a295&units=imperial';
+			url = 'http://api.openweathermap.org/data/2.5/weather?id=5392593&APPID=cd605b9a7b8b517b82492ee7bf47a295&units=fahrenheit';
 										//http://json.parser.online.fr/
 			// find city ex: api.openweathermap.org/data/2.5/weather?q={city name}
 			inputCityURL = 'http://api.openweathermap.org/data/2.5/weather?APPID=cd605b9a7b8b517b82492ee7bf47a295&q={inputCity}';
+			 http://api.openweathermap.org/data/2.5/find?q=San&nbsp;Ramon&type=like&APPID=cd605b9a7b8b517b82492ee7bf47a295
+			  
 			writeMessage("inputCityURL =" + inputCityURL)
 	  	getWeather(url, function(data) {
 
