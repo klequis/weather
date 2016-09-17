@@ -1,40 +1,37 @@
 body {
-  padding-top: 50px;
-}
-.starter-template {
-  padding: 40px 15px;
-  text-align: center;
+  color: white;
 }
 
-.location {
-  text-align: center;
-  margin: 15px 0 50px 0;
+.main {
+  margin-top: 70px;
+  background: url("../img/sunrise.jpg");
+  max-width: 750px;
 }
 
-.row-one {
-  background-color: orange;
+.navbar-container {
+  max-width: 750px;
 }
 
-.row-two {
-  background-color: green;
+.panel {
+  background-color: transparent;
+  border: none;
+  padding: 15px;
 }
 
-.pnl-title {
-  background-color: blue;
-}
 .title {
-  background-color: lightblue;
   font-size: 2.5em;
   font-weight: bold;
+  text-align: center;
 }
 
 .sub-title {
-  background-color: yellow;
+  text-align: center;
 }
 
 #tbl-details tr:nth-child(odd) > td {
   font-size: 1.0em;
   font-weight: bold;
+  border-color: gray;
   padding-bottom: 0;
 }
 
@@ -48,6 +45,7 @@ body {
   border-top: none;
 }
 
-.pnl-details {
-  padding-bottom: 0;
+.temperature {
+  font-weight: bold;
+  font-size: 2.5em;
 }
