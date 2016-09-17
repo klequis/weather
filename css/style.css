@@ -1,0 +1,53 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.location {
+  text-align: center;
+  margin: 15px 0 50px 0;
+}
+
+.row-one {
+  background-color: orange;
+}
+
+.row-two {
+  background-color: green;
+}
+
+.pnl-title {
+  background-color: blue;
+}
+.title {
+  background-color: lightblue;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.sub-title {
+  background-color: yellow;
+}
+
+#tbl-details tr:nth-child(odd) > td {
+  font-size: 1.0em;
+  font-weight: bold;
+  padding-bottom: 0;
+}
+
+#tbl-details tr:nth-child(even) > td {
+  font-size: 1.0em;
+  border-top: none;
+  padding-top: 0;
+}
+
+#tbl-details > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) {
+  border-top: none;
+}
+
+.pnl-details {
+  padding-bottom: 0;
+}
