@@ -1,10 +1,7 @@
-body {
-  color: white;
-}
-
 .main {
   margin-top: 70px;
-  background: url("../img/sunrise.jpg");
+  /*background: url("../img/clearsky01.jpg");*/
+  background-size: cover;
   max-width: 750px;
 }
 
@@ -28,6 +25,10 @@ body {
   text-align: center;
 }
 
+.small-text {
+  font-size: 1.1em;
+}
+
 #tbl-details tr:nth-child(odd) > td {
   font-size: 1.0em;
   font-weight: bold;
@@ -48,4 +49,13 @@ body {
 .temperature {
   font-weight: bold;
   font-size: 2.5em;
+}
+
+.glyphicon-arrow-up {
+  font-size: 0.7em;
+  vertical-align: +2px;
+}
+
+.glyphicon.center:before {
+    vertical-align: middle;
 }

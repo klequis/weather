@@ -1,4 +1,0 @@
-THIS IS WHAT YOU ARE DOING
-
-1) try to get the data from the json object using "city", "list" etc rather than looping
-2) should I use teh json object directly or use the stringified version to loop over
