@@ -24,16 +24,59 @@ const PROJECT_NAME = "FCC Weather App";
         }
       }
     }, true)
-
     /* ****************************************** */
-    $.getJSON('http://ipinfo.io', function(data){
-      console.log("city=" + data.city);
-      let url = populatePage(data.city);
-      useAPI(url);
-    })
+    elButton = document.getElementById("button-fahrenheit");
+    elButton.addEventListener("click", function(){changeNumScale("button-fahrenheit")}, false);
+    elButton = document.getElementById("button-celsius");
+    elButton.addEventListener("click", function(){changeNumScale("button-celsius")}, false);
     /* ****************************************** */
+    populatePage();
   }
 )();
+
+function setCity(city) {
+  if (!city == "") {
+    sessionStorage.setItem("currentCity", city);
+  } else {
+    alert("City is not set");
+  }
+  console.log("setCity().currentCity=" + city);
+}
+
+function getCity() {
+  console.log("getCity()");
+  var city = sessionStorage.getItem("currentCity");
+  return city;
+}
+
+function setNumScale(numScale) {
+  if (!numScale == "") {
+    sessionStorage.setItem("numScale", numScale);
+  } else {
+    alert("numScale is not set");
+  }
+  console.log("setNumScale.numScale=" + numScale);
+}
+
+function getNumScale() {
+  console.log("getNumScale()");
+  var tmp = sessionStorage.getItem("numScale");
+  return tmp;
+}
+
+function changeNumScale(btnName) {
+  var tmp = "";
+  switch (btnName) {
+    case "button-celsius":
+      tmp = "c";
+      break;
+    case "button-fahrenheit":
+    default:
+      tmp = "f";
+  }
+  setNumScale(tmp);
+  populatePage();
+}
 
 function userEnteredLocation() {
   console.log("userEnteredLocation");
@@ -42,6 +85,7 @@ function userEnteredLocation() {
     alert("Please enter a city");
     return;
   }
+  currentCity = city;
   populatePage(city);
 }
 
@@ -50,20 +94,33 @@ function getInputCity() {
   console.log("getInputCity");
   city = $("#input-ziporcity").val();
   console.log("city=" + city);
-  return city;
+  setCity(city);
 }
 
-function populatePage(city) {
+function populatePage() {
+  var localCity = getCity();
+  if (localCity = "") {
+    getJSON("http://ipinfo.io", function(data){
+      var city = data.city;
+      if (!city == "") {
+        setCity(city);
+      } else {
+        alert("Could not get city via ipinfo.io");
+      }
+    })
+  }
   console.log("populatePage")
-  let url = buildURL(city);
-  console.log(url);
-  getWeather(url, function(data) {
+  console.log("> localCity=" + getCity());
+  let weatherURL = buildWeatherURL(getCity());
+  console.log(weatherURL);
+  getJSON(weatherURL, function(data) {
     makePageElements(data);
   });
 }
 
-function buildURL(city) {
-  console.log("buildURL");
+function buildWeatherURL(city) {
+  console.log("buildWeatherURL");
+  console.log("> city=" + city);
   let url = "";
   let state = "CA";
   // alert(location);
@@ -74,10 +131,28 @@ function buildURL(city) {
   url += "/conditions/q/"
   url += state;
   url += "/" + city + ".json";
+  console.log("> url=" + url);
   return url;
 }
 
-function getWeather(url, callback) {
+
+/*
+function getWeather(city) {
+  if (city = "") {
+    city = getCity();
+    if (city = "") {
+      alert("getWeather: No city set");
+      return;
+    }
+  }
+  var url = buildURL(city);
+  getJSON(url, function(data) {
+    makePageElements(data);
+  })
+}
+*/
+
+function getJSON(url, callback) {
   console.log("getWeather");
   $.ajax({
     dataType: "jsonp",
@@ -103,18 +178,20 @@ function getWeather(url, callback) {
 function makePageElements(data) {
   console.log("makePageElements");
   var location = data.current_observation.display_location.full;
+  // do I need to get or set city here?
   appendToElement("title", location);
 
-  // Thu 15 Sep 2016 04:17:13 PM PDT GMT-7:00 DST
-  // 1473981433
-  var epoch = data.current_observation.local_epoch;
-  //var dateTime = moment.unix(epoch).format("MMM D, YYYY h:mm a");
-  var dateTime = epoch;
+  var observationTime = data.current_observation.observation_time;
+  var dateTime = observationTime.slice(16);
   appendToElement("sub-title", dateTime);
 
   var temp_f = data.current_observation.temp_f;
   var temp_c = data.current_observation.temp_c;
-  appendToElement("temperature", temp_f);
+  if (getNumScale() ==="f") {
+    appendToElement("temperature", temp_f);
+  } else {
+    appendToElement("temperature", temp_c);
+  }
 
   var weather = data.current_observation.weather; // cloudy, sunny, etc
   setBackground(weather);
@@ -122,7 +199,11 @@ function makePageElements(data) {
 
   var feelsLike_f = "feels like " + data.current_observation.feelslike_f;
   var feelsLike_c = "feels like " + data.current_observation.feelslike_c;
-  appendToElement("feels-like", feelsLike_f);
+  if (getNumScale() ==="f") {
+    appendToElement("feels-like", feelsLike_f);
+  } else {
+    appendToElement("feels-like", feelsLike_c);
+  }
 
   /* They don't provide high and low :(
      var highTemp = data.current_observation.
@@ -156,10 +237,7 @@ function makePageElements(data) {
   var pressure_in = data.current_observation.pressure_in;
   var pressureTrend = data.current_observation.pressure_trend;
   appendTableRow("tbl-details", "Pressure");
-  // appendTableRow("tbl-details", dewPoint_f + " " + pressureTrend);
-  // <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
   var pressure = dewPoint_f;
-  // pressure +=  "<i class='fa fa-long-arrow-up' aria-hidden='true'>a</i>";
   pressure += "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'></span>"
   appendTableRow("tbl-details", pressure);
 }
@@ -176,11 +254,7 @@ function appendToElement(parentId, text) {
 }
 
 function makeElement(parentId, elementType, text) {
-  // document.write(pstart + text + pend);
-  // document.write(parentId + ", " + elementType + ", " + text);
   var ele = document.createElement(elementType);
-
-
   // Add new text node
   var txt = document.createTextNode(text);
   ele.appendChild(txt);
