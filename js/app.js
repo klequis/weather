@@ -108,7 +108,8 @@ function makePageElements(data) {
   // Thu 15 Sep 2016 04:17:13 PM PDT GMT-7:00 DST
   // 1473981433
   var epoch = data.current_observation.local_epoch;
-  var dateTime = moment.unix(epoch).format("MMM D, YYYY h:mm a");
+  //var dateTime = moment.unix(epoch).format("MMM D, YYYY h:mm a");
+  var dateTime = epoch;
   appendToElement("sub-title", dateTime);
 
   var temp_f = data.current_observation.temp_f;
@@ -232,36 +233,44 @@ function setBackground(val) {
   switch (val.toLowerCase()) {
     case "clear":
     case "sunny":
-      ret = clearSkyPic;
+      //ret = clearSkyPic;
+      ret = "http://klequis.com/images/weather/clearsky01.jpg";
       color = "black";
       break;
     case "mostly sunny":
-      ret = mostlySunnyPic;
+      //ret = mostlySunnyPic;
+      ret = "http://klequis.com/images/weather/mostly.sunny.png";
       color = "white";
       break;
     case "cloudy":
-      ret = cloudyPic;
+      //ret = cloudyPic;
+      ret = "http://klequis.com/images/weather/cloudy.png";
       color = "white";
       break;
     case "fog":
-      ret = fogPic;
+      //ret = fogPic;
+      ret = "http://klequis.com/images/weather/fog.png";
       break;
     case "mostly cloudy":
-      ret = mostlyCloudyPic;
+      //ret = mostlyCloudyPic;
+      ret = "http://klequis.com/images/weather/mostly.cloudy.png";
       break;
     case "rain":
-      ret = rainPic;
+      //ret = rainPic;
+      ret = "http://klequis.com/images/weather/rain.jpg";
       color = "white";
       break;
     case "thunderstorms":
-      ret = thunderstormsPic;
+      //ret = thunderstormsPic;
+      ret = "http://klequis.com/images/weather/thunderstorms.png";
       color = "white";
       break;
     case "partly cloudy":
     case "partly sunny":
     default:
       color = "white";
-      ret = unknownPic;
+      //ret = unknownPic;
+      ret = "http://klequis.com/images/weather/unknown.png";
   }
 
   // $("#root").css("color:white");
