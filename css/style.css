@@ -11,6 +11,8 @@
 
 .panel {
   background-color: transparent;
+  /*background-color: rgba(255, 255, 255, 0.3);*/
+
   border: none;
   padding: 15px;
 }
@@ -60,29 +62,29 @@
     vertical-align: middle;
 }
 
+.button-active {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.button-active:hover {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.button-active:focus {
+  color: #fff;
+}
+
 .button-inactive {
-  color: #bfbfbf;
+  /*color: #bfbfbf;*/
+  color: #2a2a2a;
   background-color: #6c7b88;
   border-color: #6c7680;
 }
-
 .button-inactive:hover {
   color: #fff;
   background-color: #5e6b77;
   border-color: #6c7680;
   /*text-decoration: none;*/
-}
-
-/*
-.btn-inactive {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-}
-*/
-
-.btn-active {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
 }

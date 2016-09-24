@@ -30,6 +30,7 @@ const PROJECT_NAME = "FCC Weather App";
     elButton = document.getElementById("button-celsius");
     elButton.addEventListener("click", function(){changeNumScale("button-celsius")}, false);
     /* ****************************************** */
+    toggleNumScaleButtons();
     populatePage();
   }
 )();
@@ -65,6 +66,7 @@ function getNumScale() {
 }
 
 function changeNumScale(btnName) {
+  console.log("changeNumScale()");
   var tmp = "";
   switch (btnName) {
     case "button-celsius":
@@ -75,7 +77,29 @@ function changeNumScale(btnName) {
       tmp = "f";
   }
   setNumScale(tmp);
+  toggleNumScaleButtons();
   populatePage();
+  // doesn't work yet
+  $('.pnl-main').fadeTo(1000, 0.5, function() { $('.pnl-main').fadeTo(800, 1); });
+}
+
+function toggleNumScaleButtons() {
+  var tmp = getNumScale();
+  if (tmp === "") {
+    tmp = "f";
+    setNumScale(tmp);
+  }
+  if (tmp == "c") {
+    $("#button-celsius").removeClass("button-inactive");
+    $("#button-celsius").addClass("button-active");
+    $("#button-fahrenheit").removeClass("button-active");
+    $("#button-fahrenheit").addClass("button-inactive");
+  } else {
+    $("#button-celsius").removeClass("button-active");
+    $("#button-celsius").addClass("button-inactive");
+    $("#button-fahrenheit").removeClass("button-inactive");
+    $("#button-fahrenheit").addClass("button-active");
+  }
 }
 
 function userEnteredLocation() {
@@ -85,7 +109,6 @@ function userEnteredLocation() {
     alert("Please enter a city");
     return;
   }
-  currentCity = city;
   populatePage(city);
 }
 
