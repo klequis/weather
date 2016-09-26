@@ -121,24 +121,31 @@ function getInputCity() {
 }
 
 function populatePage() {
+  // So this is funcky to have 2 different ways of making a getJSON call.
+  // However, the ipinfo.io call mysteriously stopped working with
+  // getJSON but works with $.getJSON so I'm doing it that way. I could do
+  // both with $.JSON but WeatherUnderground recommends .ajax method and
+  // ipinfo.ip doesn't need ajax because it only runs on page load
+  console.log("populatePage")
+
   var localCity = getCity();
-  if (localCity = "") {
-    getJSON("http://ipinfo.io", function(data){
+  console.log("> localCity=" + localCity);
+  if (localCity) {
+    let weatherURL = buildWeatherURL(localCity);
+    console.log(weatherURL);
+    getJSON(weatherURL, function(data) {
+      makePageElements(data);
+    });
+  } else {
+    $.getJSON("http://ipinfo.io", function(data){
       var city = data.city;
-      if (!city == "") {
+      if (city) {
         setCity(city);
       } else {
         alert("Could not get city via ipinfo.io");
       }
     })
   }
-  console.log("populatePage")
-  console.log("> localCity=" + getCity());
-  let weatherURL = buildWeatherURL(getCity());
-  console.log(weatherURL);
-  getJSON(weatherURL, function(data) {
-    makePageElements(data);
-  });
 }
 
 function buildWeatherURL(city) {
@@ -157,23 +164,6 @@ function buildWeatherURL(city) {
   console.log("> url=" + url);
   return url;
 }
-
-
-/*
-function getWeather(city) {
-  if (city = "") {
-    city = getCity();
-    if (city = "") {
-      alert("getWeather: No city set");
-      return;
-    }
-  }
-  var url = buildURL(city);
-  getJSON(url, function(data) {
-    makePageElements(data);
-  })
-}
-*/
 
 function getJSON(url, callback) {
   console.log("getWeather");
